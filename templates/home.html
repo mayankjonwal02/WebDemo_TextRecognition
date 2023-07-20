@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Web Demo</title>
+    <title>Indic Scene-Text Recognizer</title>
+
     <link
       rel="stylesheet"
       href="{{url_for('static',filename = 'css/style.css')}}"
@@ -14,7 +15,7 @@
     <header>
       <div class="titlebox">
         <div class="title">
-          <h1>WebDemo</h1>
+          <h1>Indic Scene-Text Recognizer</h1>
         </div>
         <div class="inputbutton">
           <input
@@ -40,6 +41,51 @@
       </div>
     </header>
     <footer>
+      <div
+        id="preimg"
+        style="
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          /* margin-left: 5%; */
+        "
+      >
+        <img
+          id="img1"
+          src="{{url_for('static',filename = 'images/4.jpg')}}"
+          alt=""
+          onclick="process_pre_image(document.getElementById('img1'))"
+          width="100"
+          height="100"
+          style="padding: 2%"
+        />
+        <!-- <img
+          id="img2"
+          src="{{url_for('static',filename = 'images/3.jpg')}}"
+          alt=""
+          onclick="process_pre_image(document.getElementById('img2'))"
+          width="100"
+          height="100"
+        /> -->
+        <img
+          id="img2"
+          src="{{url_for('static',filename = 'images/2.jpg')}}"
+          alt=""
+          onclick="process_pre_image(document.getElementById('img2'))"
+          width="100"
+          height="100"
+          style="padding-right: 2%"
+        />
+        <img
+          id="img3"
+          src="{{url_for('static',filename = 'images/1.jpg')}}"
+          alt=""
+          onclick="process_pre_image(document.getElementById('img3'))"
+          width="100"
+          height="100"
+          style="padding: 2%"
+        />
+      </div>
       <img
         src=""
         id="originalimage"

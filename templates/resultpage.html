@@ -13,18 +13,37 @@
         height: fit-content;
         width: fit-content;
       }
+      .images {
+        display: flex;
+        flex-direction: row;
+      }
     </style>
   </head>
-  <div>
-    <img
-      src="data:image/jpeg;base64,{{img_data}}"
-      alt=""
-      style="
-        margin-top: 40%;
-        margin-left: 40%;
-        max-width: 500px;
-        max-height: 500px;
-      "
-    />
-  </div>
+  <body>
+    <div class="images">
+      <img
+        src="data:image/jpeg;base64,{{input_img_data}}"
+        alt="Detected"
+        style="
+          margin-top: 20%;
+          margin-left: 20%;
+          height: 200%;
+          width: 200%;
+          padding: auto;
+        "
+      />
+
+      <img
+        src="data:image/jpeg;base64,{{output_img_data}}"
+        alt="Recognized"
+        style="
+          margin-top: 20%;
+          margin-left: 10%;
+          height: 200%;
+          width: 200%;
+          padding: auto;
+        "
+      />
+    </div>
+  </body>
 </html>

@@ -1,6 +1,7 @@
 function handleFileSelect(event) {
   const file = event.target.files[0];
   // hello();
+  document.getElementById("preimg").style.display = "none";
   console.log("Selected file:", file);
   const originalimage = document.getElementById("originalimage");
   const fileaddress = URL.createObjectURL(file);
@@ -17,6 +18,34 @@ function handleFileSelect(event) {
   };
 
   reader.readAsDataURL(file);
+}
+
+function process_pre_image(myelement) {
+  document.getElementById("loading").style.display = "block";
+  var imgElement = myelement;
+  var canvas = document.createElement("canvas");
+  var ctx = canvas.getContext("2d");
+  canvas.width = imgElement.width;
+  canvas.height = imgElement.height;
+  ctx.drawImage(imgElement, 0, 0, imgElement.width, imgElement.height);
+  var imageDataUrl = canvas.toDataURL("image/jpeg");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/process-image", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      var response = xhr.responseText;
+      // alert(xhr.responseURL);
+      // window.location.href = xhr.responseURL;
+      document.open();
+      document.write(response);
+      document.close();
+    }
+  };
+
+  xhr.send(JSON.stringify({ image_data: imageDataUrl }));
 }
 
 function process_image() {
@@ -36,7 +65,8 @@ function process_image() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var response = xhr.responseText;
-      // alert(response);
+      // alert(xhr.responseURL);
+      // window.location.href = xhr.responseURL;
       document.open();
       document.write(response);
       document.close();
