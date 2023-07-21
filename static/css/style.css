@@ -126,6 +126,7 @@ div footer .processbutton:active {
   left: 40%;
   background-color: transparent;
   display: none;
+  animation: scaleanimation 2s infinite alternate;
 }
 .loading h1 {
   padding: 10%;
@@ -134,4 +135,29 @@ div footer .processbutton:active {
   border-radius: 30px;
   font-size: 300%;
   border: 3px solid blueviolet;
+  animation: scaleanimation 0.8s infinite alternate;
+}
+
+@keyframes scaleanimation {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+.preimg {
+  background-color: transparent;
+}
+.preimg img {
+  transition: transform 0.2s;
+  background-color: transparent;
+}
+
+.preimg img:hover {
+  transform: scale(1.2);
+}
+
+.preimg img:active {
+  transform: scale(0.95);
 }

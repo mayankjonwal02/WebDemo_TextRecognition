@@ -75,7 +75,7 @@ def get_image(imagepath):
                 int(i["bounding_box"]["h"]),
             ),
             color=(0, 0, 255),
-            thickness=2,
+            thickness=1,
         )
         label = i['label']
         wordparams.append([label,i["bounding_box"]["x"],i["bounding_box"]["y"]])
