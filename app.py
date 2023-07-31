@@ -1,4 +1,3 @@
-
 # from crypt import methods
 import requests as req
 import cv2
@@ -6,10 +5,11 @@ import urllib.request
 import numpy as np
 import pygame
 import base64
-from flask import Flask,request,jsonify,render_template
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
 app = Flask(__name__)
+
 
 def setup_screen_sprite(impath):
     img = pygame.image.load(impath)
@@ -23,29 +23,30 @@ def setup_screen_sprite(impath):
     sprite.rect = rect
     return screen, sprite, surf
 
-def render_text_on_images(imgpath,wordparams):
-        pygame.init()
-        fontpath = r"D:\web projects\new_api_test\EkMukta-Regular.ttf"
-        screen, sprite, surf = setup_screen_sprite(imgpath)
-        mf = pygame.font.Font(fontpath,size=15)
-        mf.set_script("Deva")
-        mf.set_bold(1)
-        sequence = []
-        for i in wordparams:
-            word = i[0]
-            
-            point = [i[1],i[2]]
-            ren = mf.render(word, False, (0, 255, 0))
-            sequence.append((ren, (point[0], point[1] - mf.get_height() + 7.5)))
-            surf.blits(sequence)
-            sprite.image.blit(surf, sprite.rect)
-        grp = pygame.sprite.Group()
-        grp.add(sprite)
-        grp.draw(screen)
-        pygame.display.flip()
-        pygame.image.save_extended(screen, "output.jpeg")
-        return 1
-        
+
+def render_text_on_images(imgpath, wordparams):
+    pygame.init()
+    fontpath = r"D:\web projects\new_api_test\EkMukta-Regular.ttf"
+    screen, sprite, surf = setup_screen_sprite(imgpath)
+    mf = pygame.font.Font(fontpath, size=25)
+    mf.set_script("Deva")
+    mf.set_bold(1)
+    sequence = []
+    for i in wordparams:
+        word = i[0]
+
+        point = [i[1], i[2]]
+        ren = mf.render(word, False, (0, 0, 0))
+        sequence.append((ren, (point[0], point[1] - mf.get_height() + 7.5)))
+        surf.blits(sequence)
+        sprite.image.blit(surf, sprite.rect)
+    grp = pygame.sprite.Group()
+    grp.add(sprite)
+    grp.draw(screen)
+    pygame.display.flip()
+    pygame.image.save_extended(screen, "output.jpeg")
+    return 1
+
 
 def get_image(imagepath):
     wordparams = []
@@ -77,21 +78,18 @@ def get_image(imagepath):
             color=(0, 0, 255),
             thickness=1,
         )
-        label = i['label']
-        wordparams.append([label,i["bounding_box"]["x"],i["bounding_box"]["y"]])
-    cv2.imwrite("processedinput.jpeg",image)
-    render_text_on_images("processedinput.jpeg",wordparams)
-    
+        label = i["label"]
+        wordparams.append([label, i["bounding_box"]["x"], i["bounding_box"]["y"]])
+    cv2.imwrite("processedinput.jpeg", image)
+    render_text_on_images("processedinput.jpeg", wordparams)
 
 
-
-
-@app.route('/')
+@app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template("home.html")
 
 
-@app.route('/process-image', methods=['POST','GET'])
+@app.route("/process-image", methods=["POST", "GET"])
 def process_image():
     # Retrieve the image data from the request
     image_data = request.json.get("image_data")
@@ -106,33 +104,38 @@ def process_image():
 
     # Perform any processing on the image
     # ...
-    cv2.imwrite("input.jpeg",img)
+    cv2.imwrite("input.jpeg", img)
 
     # Return the processed image as base64 encoded string
     hello = get_image("input.jpeg")
     outputimg = cv2.imread("output.jpeg")
-    _, encoded_image = cv2.imencode('.jpg', outputimg)
-    
-   
-    output_image_data = base64.b64encode(encoded_image).decode('utf-8')
+    _, encoded_image = cv2.imencode(".jpg", outputimg)
+
+    output_image_data = base64.b64encode(encoded_image).decode("utf-8")
     processedinputimg = cv2.imread("processedinput.jpeg")
-    _, encoded_input_image = cv2.imencode('.jpg', processedinputimg)
-    input_image_data = base64.b64encode(encoded_input_image).decode('utf-8')
-    
-    return render_template("resultpage.html",output_img_data =  output_image_data,input_img_data = input_image_data)
+    _, encoded_input_image = cv2.imencode(".jpg", processedinputimg)
+    input_image_data = base64.b64encode(encoded_input_image).decode("utf-8")
+
+    return render_template(
+        "resultpage.html",
+        output_img_data=output_image_data,
+        input_img_data=input_image_data,
+    )
 
 
-@app.route('/process', methods=['POST'])
+@app.route("/process", methods=["POST"])
 def process():
-    data = request.get_json() # retrieve the data sent from JavaScript
+    data = request.get_json()  # retrieve the data sent from JavaScript
     # process the data using Python code
-    result = data['value'] * 2
-    return jsonify(result=result) # return the result to JavaScript
+    result = data["value"] * 2
+    return jsonify(result=result)  # return the result to JavaScript
 
-@app.route('/testpage', methods=['GET'])
+
+@app.route("/testpage", methods=["GET"])
 def testPage():
-    return {"data":"successfully connected"}
-  
-if __name__ == '__main__':
+    return {"data": "successfully connected"}
+
+
+if __name__ == "__main__":
     # app.run(debug=False,port=5001)
-    app.run(debug=False,host='0.0.0.0',port=5001)
+    app.run(debug=False, host="0.0.0.0", port=5001)

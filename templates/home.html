@@ -34,10 +34,23 @@
           <!-- <h1 class="url"></h1> -->
         </div>
       </div>
-      <div class="titleimage">
+      <div class="titleimage" style="display: flex; flex-direction: row">
         <img
           src="{{url_for('static',filename = 'images/pngwing.com (1).png')}}"
         />
+        <div
+          style="
+            background-color: transparent;
+            position: absolute;
+            transform: rotateX(0deg) rotateY(360deg) rotateZ(0deg);
+          "
+        >
+          <img
+            class="extra"
+            src="{{url_for('static',filename = 'images/pngwing.com (1).png')}}"
+            style="background-color: transparent"
+          />
+        </div>
       </div>
     </header>
     <footer>

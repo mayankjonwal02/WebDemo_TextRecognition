@@ -83,12 +83,38 @@ header .titleimage img {
   background-color: transparent;
   height: 60%;
   width: 60%;
+  /* transition: transform 0.7s; */
+  animation: rotate 5s linear infinite;
+}
+.extra {
+  position: relative;
+  background-color: transparent;
+  height: 60%;
+  width: 60%;
   transition: transform 0.7s;
+  /* animation: rotate1 7s linear infinite; */
 }
 
 header .titleimage img:hover {
   transform: rotate3d(1, 1, 1, 360deg);
 }
+
+/* @keyframes rotate1 {
+  from {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(0deg) rotateZ(360deg);
+  }
+} */
+/* @keyframes rotate {
+  from {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+} */
 
 div footer {
   display: flex;
